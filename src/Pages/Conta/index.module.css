@@ -2,13 +2,12 @@
   background-color: whitesmoke;
   height: calc(100vh - 200px);
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
 .bloco {
-  width: 1000px;
-  margin: 80px 0px;
-  margin-bottom: 80px;
   background-color: var(--bg-color);
   border-radius: 15px;
 }
@@ -148,7 +147,6 @@ input[type='file'] {
 .btnSair {
   color: #bb0202;
   border: solid 2px #bb0202;
-  margin-top: 0px;
   width: 70px;
 }
 
@@ -164,7 +162,7 @@ input[type='file'] {
 .sair {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin: 40px;
 }
 
 .btRemoveAv {
