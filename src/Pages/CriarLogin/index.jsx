@@ -6,7 +6,6 @@ import useVisiblePass from "../../hooks/useVisiblePass";
 import useForm from "../../hooks/useForm";
 import { useContext } from "react";
 import UserContext from "../../UserContext";
-import useRegister from "../../hooks/useRegister";
 
 const CriarLogin = () => {
   const { setUsername, setLogin, setUserEmail } = useContext(UserContext);
@@ -14,7 +13,6 @@ const CriarLogin = () => {
   const inputEmail = useForm("email");
   const inputPassword = useForm("password");
   const inputPasswordConfirm = useForm();
-  const { register, loading, errorRegister } = useRegister();
 
   const navigate = useNavigate();
 
@@ -25,6 +23,7 @@ const CriarLogin = () => {
     setVisiblePassConfirm,
     error,
   } = useVisiblePass();
+
 
   const criarConta = async () => {
 
@@ -39,29 +38,31 @@ const CriarLogin = () => {
       inputPassword.value &&
       inputPasswordConfirm.value
     ) {
-      // Cadastro Firebase
-      try {
-        const name = inputName.value;
-        const email = inputEmail.value;
-        const password = inputPassword.value;
-        const user = await register(name, email, password);
 
-        console.log(user)
+      const name = inputName.value;
+      const email = inputEmail.value;
+      const password = inputPassword.value;
+      
 
-        setUsername(name);
-        setUserEmail(email);
+      const response = await fetch("http://localhost:5000/cadastro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+  
+      const result = await response.json();
+      alert(result.message);
 
-        console.log("Usuário registrado:", user);
-        alert("Usuário registrado com sucesso!");
+      console.log(user)
+
+      setUsername(name);
+      setUserEmail(email);
+
+      console.log("Usuário registrado:", user);
+      alert("Usuário registrado com sucesso!");
         
-        if (!loading) {
-          setLogin(true);
-          navigate("/");
-        }
-      } catch (err) {
-        console.error("Erro ao registrar:", err.message);
-        alert(err.message);
-      }
     } else {
       inputName.onBlur()
       inputEmail.onBlur()
@@ -190,9 +191,8 @@ const CriarLogin = () => {
             {err}
           </span>
           <button onClick={criarConta} className={styles.botao}>
-            {loading ? "Cadastrando..." : "Registrar"}
+            Registrar
           </button>
-          {errorRegister && <p style={{ color: "red" }}>{errorRegister}</p>}
           <p className={styles.possuiConta}>
             Já possui uma conta?
             <Link to="/login" className={styles.cliqueAqui}>
