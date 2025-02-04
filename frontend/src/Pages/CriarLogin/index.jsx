@@ -39,29 +39,23 @@ const CriarLogin = () => {
       inputPasswordConfirm.value
     ) {
 
-      const name = inputName.value;
+      const nome = inputName.value;
       const email = inputEmail.value;
-      const password = inputPassword.value;
+      const senha = inputPassword.value;
       
-
       const response = await fetch("http://localhost:5000/cadastro", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ nome, email, senha })
       });
   
       const result = await response.json();
       alert(result.message);
 
-      console.log(user)
-
-      setUsername(name);
+      setUsername(nome);
       setUserEmail(email);
-
-      console.log("Usuário registrado:", user);
-      alert("Usuário registrado com sucesso!");
         
     } else {
       inputName.onBlur()
