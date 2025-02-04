@@ -2,8 +2,8 @@
   "name": "project-root",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
-    "build": "vite build"
+    "dev": "concurrently \"npm run dev --prefix backend\" \"vite\""
+    
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
