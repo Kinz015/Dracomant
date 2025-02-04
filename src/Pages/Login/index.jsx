@@ -2,7 +2,6 @@ import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import styles from "../CriarLogin/index.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import useLogin from "../../hooks/useLogin";
 import { useState, useContext } from "react";
 import useVisiblePass from "../../hooks/useVisiblePass";
 import UserContext from "../../UserContext";
@@ -11,7 +10,6 @@ const Login = () => {
   const { setUsername, setLogin, setUserEmail } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, loading, error } = useLogin();
 
   const navigate = useNavigate();
 
@@ -21,28 +19,9 @@ const Login = () => {
   } = useVisiblePass();
 
   const logar = async () => {
-    try {
-      const user = await login(email, password);
-
-      // Pega o nome e e-mail do usuário logado
-      const userName = user.displayName;  // Pega o nome do usuário
-      const userEmail = user.email;       // Pega o e-mail do usuário
-
-      // Armazena o nome e e-mail no contexto
-      setUsername(userName);
-      setUserEmail(userEmail);
-
-      console.log("Usuário logado:", user);
-      alert("Login realizado com sucesso!");
-      if (!loading) {
-        setLogin(true);
-        navigate("/");
-      }
-    } catch (err) {
-      console.error("Erro ao logar:", err.message);
-      alert(err.message);
-    }
+    console.log("logou")
   };
+
 
   return (
     <div className={styles.main}>
@@ -85,10 +64,9 @@ const Login = () => {
             )}
           </div>
           <span className={styles.err}></span>
-          <button onClick={logar} disabled={loading} className={styles.botao}>
-            {loading ? "Entrando..." : "Entrar"}
+          <button onClick={logar} className={styles.botao}>
+            "Entrar"
           </button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
           <p className={styles.possuiConta}>
             Não possui uma conta?
             <Link to="/criarLogin" className={styles.cliqueAqui}>
