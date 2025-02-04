@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix backend\" \"vite\"",
-    "build": "webpack --config webpack.config.js"
+    "build": "vite build"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
