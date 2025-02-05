@@ -5,11 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import useVisiblePass from "../../hooks/useVisiblePass";
 import UserContext from "../../UserContext";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
   const { setUsername, setLogin, setUserEmail } = useContext(UserContext);
   const [inputEmail, setEmail] = useState("");
   const [inputPassword, setPassword] = useState("");
+  const { login, loading, error } = useLogin();
 
   const navigate = useNavigate();
 
@@ -21,30 +23,12 @@ const Login = () => {
     const senha = inputPassword;
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, senha }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        alert(errorData.message || "Erro ao fazer login");
-        return;
-      }
-
-      const data = await response.json();
+      const data = await login(email, senha);
       alert("Login realizado com sucesso!");
-
-      // Opcional: Armazene o token no localStorage para usar depois
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
-    } catch (err) {
-      alert("Erro de conexão com o servidor");
-    }
+      // Faça algo com os dados, como redirecionar o usuário
+  } catch (err) {
+      alert(err.message); // Exibe o alerta de erro
+  }
   };
 
   return (
