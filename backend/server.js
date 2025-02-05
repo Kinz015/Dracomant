@@ -41,6 +41,33 @@ app.post("/cadastro", (req, res) => {
   });
 });
 
+// Endpoint para login de usuários
+app.post("/login", (req, res) => {
+  const { email, senha } = req.body;
+
+  const sql = "SELECT * FROM usuarios WHERE email = ?";
+  db.query(sql, [email], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Erro no servidor", error: err });
+    }
+
+    if (results.length === 0) {
+      return res.status(401).json({ message: "Usuário não encontrado" });
+    }
+
+    const user = results[0];
+
+    // Comparar senhas (aqui, sem criptografia)
+    if (user.senha !== senha) {
+      return res.status(401).json({ message: "Senha incorreta" });
+    }
+
+    // Se quiser, você pode usar JWT para gerar um token
+    res.status(200).json({ message: "Login realizado com sucesso!", user: { id: user.id, nome: user.nome, email: user.email } });
+  });
+});
+
+
 // Iniciar o servidor na porta 5000
 app.listen(5000, () => {
   console.log("Servidor rodando na porta 5000");

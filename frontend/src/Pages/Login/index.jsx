@@ -8,20 +8,44 @@ import UserContext from "../../UserContext";
 
 const Login = () => {
   const { setUsername, setLogin, setUserEmail } = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [inputEmail, setEmail] = useState("");
+  const [inputPassword, setPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const {
-    visiblePass,
-    setVisiblePass,
-  } = useVisiblePass();
+  const { visiblePass, setVisiblePass } = useVisiblePass();
 
-  const logar = async () => {
-    console.log("logou")
+  const logar = async (e) => {
+    e.preventDefault(); // Previne o reload da página
+    const email = inputEmail;
+    const senha = inputPassword;
+
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, senha }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.message || "Erro ao fazer login");
+        return;
+      }
+
+      const data = await response.json();
+      alert("Login realizado com sucesso!");
+
+      // Opcional: Armazene o token no localStorage para usar depois
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+    } catch (err) {
+      alert("Erro de conexão com o servidor");
+    }
   };
-
 
   return (
     <div className={styles.main}>
@@ -29,26 +53,22 @@ const Login = () => {
         <form onSubmit={(ev) => ev.preventDefault()} className={styles.form}>
           <h2 className={styles.titulo}>DRACOMANT</h2>
           <p className={styles.criarConta}>Login</p>
-          <div
-            className={styles.blocos_input}
-          >
+          <div className={styles.blocos_input}>
             <input
               type="email"
               placeholder="E-mail"
-              value={email}
+              value={inputEmail}
               onChange={(e) => setEmail(e.target.value)}
             />
 
             <AiOutlineMail className={styles.icons} />
           </div>
           <span className={styles.err}></span>
-          <div
-            className={styles.blocos_input}
-          >
+          <div className={styles.blocos_input}>
             <input
               type={visiblePass ? "text" : "password"}
               placeholder="Senha"
-              value={password}
+              value={inputPassword}
               onChange={(e) => setPassword(e.target.value)}
             />
             {visiblePass ? (
