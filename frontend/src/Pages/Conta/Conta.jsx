@@ -5,7 +5,6 @@ import { IoExitOutline } from "react-icons/io5";
 import { MdModeEditOutline } from "react-icons/md";
 import UserContext from "../../UserContext";
 import { useNavigate } from "react-router-dom";
-import { getAuth, updateProfile, onAuthStateChanged } from "firebase/auth";
 
 const Conta = () => {
   const { username, setUsername, userEmail, setUserEmail, avatar, setAvatar, clear, setLogin } =
@@ -15,31 +14,14 @@ const Conta = () => {
   const inputRef = useRef();
   const [avatarName, setAvatarName] = useState(null);
   const [avatarTemp, setAvatarTemp] = useState(null);
-  const [loading, setLoading] = useState(false);  // Indicador de carregamento
-  const [error, setError] = useState(null); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const auth = getAuth();
-    
-    // Observa o estado de autenticação
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // Usuário está logado
-        setLogin(true); // Atualiza o estado de login
-        setUsername(user.displayName); // Armazena o nome
-        setTempName(user.displayName)
-        setUserEmail(user.email); // Armazena o e-mail
-      } else {
-        // Usuário não está logado
-        setLogin(false); // Atualiza o estado de login
-        setUsername(null); // Limpa o nome
-        setUserEmail(null); // Limpa o e-mail
-      }
-    });
 
-    return () => unsubscribe();
-  }, [setLogin, setUsername, setUserEmail]);
+  useEffect(() => {
+    setLogin(true)
+    setTempName(username)
+  }, [setLogin, setUsername, setUserEmail, username]);
 
   function AlterarNome() {
     inputName.current.removeAttribute("disabled");
@@ -61,14 +43,6 @@ const Conta = () => {
   }
   
   const salvar = async () => {
-    const auth = getAuth();  // Obtém a instância de autenticação do Firebase
-    const user = auth.currentUser;  // Obtém o usuário autenticado atualmente
-
-    if (!user) {
-      setError("Você precisa estar logado para alterar o nome.");
-      return;
-    }
-
     if (!tempName) {
       setError("Por favor, insira um nome válido.");
       return;
@@ -78,9 +52,8 @@ const Conta = () => {
 
     try {
       // Atualiza o nome de exibição do usuário
-      await updateProfile(user, {
-        displayName: tempName,  // Atualiza o displayName
-      });
+
+      // Atualizar no banco de dados
 
       // Atualiza o nome no contexto global
       setUsername(tempName);
@@ -144,7 +117,7 @@ const Conta = () => {
           </div>
           <div className={styles.blocoDois}>
             <div className={styles.escritas}>
-              <label>Nome</label>
+              <label>Nome:</label>
               <div className={styles.ignorDiv}>
                 <div className={styles.blocoInput}>
                   <input
@@ -168,7 +141,7 @@ const Conta = () => {
                   </button>
                 )}
               </div>
-              <label>E-mail</label>
+              <label>E-mail:</label>
               <p>{userEmail}</p>
             </div>
             <div className={styles.buttons}>

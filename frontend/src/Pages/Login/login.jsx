@@ -23,9 +23,13 @@ const Login = () => {
     const senha = inputPassword;
 
     try {
-      const data = await login(email, senha);
+      const userData = await login(email, senha);
+      console.log(userData);
+      setUsername(userData.nome);
+      setUserEmail(userData.email);
+      setLogin(true);
       alert("Login realizado com sucesso!");
-      // Faça algo com os dados, como redirecionar o usuário
+      navigate("/minhaconta");
     } catch (err) {
       alert(err.message); // Exibe o alerta de erro
     }
@@ -44,7 +48,6 @@ const Login = () => {
               value={inputEmail}
               onChange={(e) => setEmail(e.target.value)}
             />
-
             <AiOutlineMail className={styles.icons} />
           </div>
           <span className={styles.err}></span>
@@ -69,7 +72,7 @@ const Login = () => {
           </div>
           <span className={styles.err}></span>
           <button onClick={logar} className={styles.botao}>
-            "Entrar"
+            Entrar
           </button>
           <p className={styles.possuiConta}>
             Não possui uma conta?

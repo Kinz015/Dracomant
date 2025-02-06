@@ -4,8 +4,8 @@ import Curiosidades from "./Pages/Curiosidades";
 import Contato from "./Pages/Contato";
 import Ajuda from "./Pages/Ajuda";
 import RootLayout from "./Components/Layout/RootLayout";
-import Login from "./Pages/Login";
-import CriarLogin from "./Pages/CriarLogin";
+import Login from "./Pages/Login/login";
+import CriarLogin from "./Pages/CriarLogin/criarLogin";
 import Atendimento from "./Pages/Atendimento";
 import Conta from "./Pages/Conta/Conta";
 
