@@ -9,12 +9,12 @@ import UserContext from "../../UserContext";
 import useCadastroUsuario from "../../hooks/useCadastroUsuario";
 
 const CriarLogin = () => {
-  const { setUsername, setLogin, setUserEmail } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const inputName = useForm();
   const inputEmail = useForm("email");
   const inputPassword = useForm("password");
   const inputPasswordConfirm = useForm();
-  const { cadastrarUsuario, loading, error } = useCadastroUsuario()
+  const { cadastrarUsuario, loading, error } = useCadastroUsuario();
 
   const navigate = useNavigate();
 
@@ -24,7 +24,6 @@ const CriarLogin = () => {
     visiblePassConfirm,
     setVisiblePassConfirm,
   } = useVisiblePass();
-
 
   const criarConta = async (e) => {
     e.preventDefault();
@@ -39,29 +38,25 @@ const CriarLogin = () => {
       inputPassword.value &&
       inputPasswordConfirm.value
     ) {
-
       const nome = inputName.value;
       const email = inputEmail.value;
       const senha = inputPassword.value;
-      const confirmarSenha = inputPasswordConfirm.value
-      
+      const confirmarSenha = inputPasswordConfirm.value;
+
       try {
         const data = await cadastrarUsuario(nome, email, senha, confirmarSenha);
         alert(data.message || "Cadastro de usuário realizado com sucesso!");
+        setUserData(data);
         // Faça algo com os dados, como redirecionar o usuário
-    } catch (err) {
+      } catch (err) {
         alert(err.message); // Exibe o alerta de erro
-    }
-      
+      }
 
-      setUsername(nome);
-      setUserEmail(email);
-        
     } else {
-      inputName.onBlur()
-      inputEmail.onBlur()
-      inputPassword.onBlur()
-      inputPasswordConfirm.onBlur()
+      inputName.onBlur();
+      inputEmail.onBlur();
+      inputPassword.onBlur();
+      inputPasswordConfirm.onBlur();
     }
   };
 
@@ -180,9 +175,10 @@ const CriarLogin = () => {
             {inputPasswordConfirm.error && <p>{inputPasswordConfirm.error}</p>}
             {err}
           </span>
-          <button onClick={criarConta} className={styles.botao}>
-            Registrar
+          <button onClick={criarConta} className={styles.botao} disabled={loading}>
+            {loading ? "Cadastrando..." : "Cadastrar"}
           </button>
+          {error && <p>{error}</p>}
           <p className={styles.possuiConta}>
             Já possui uma conta?
             <Link to="/login" className={styles.cliqueAqui}>

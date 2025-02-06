@@ -5,22 +5,31 @@ import { IoExitOutline } from "react-icons/io5";
 import { MdModeEditOutline } from "react-icons/md";
 import UserContext from "../../UserContext";
 import { useNavigate } from "react-router-dom";
+import useAtualizarNome from "../../hooks/useAtualizarNome";
 
 const Conta = () => {
-  const { username, setUsername, userEmail, setUserEmail, avatar, setAvatar, clear, setLogin } =
-    useContext(UserContext);
+  const {
+    userId,
+    username,
+    setUsername,
+    userEmail,
+    setUserEmail,
+    avatar,
+    setAvatar,
+    clear,
+    setLogin,
+  } = useContext(UserContext);
   const [tempName, setTempName] = useState();
   const inputName = useRef();
   const inputRef = useRef();
   const [avatarName, setAvatarName] = useState(null);
   const [avatarTemp, setAvatarTemp] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { atualizarNome, loading, error } = useAtualizarNome()
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    setLogin(true)
-    setTempName(username)
+    setLogin(true);
+    setTempName(username);
   }, [setLogin, setUsername, setUserEmail, username]);
 
   function AlterarNome() {
@@ -41,29 +50,20 @@ const Conta = () => {
   function cancel() {
     setTempName(username);
   }
-  
-  const salvar = async () => {
-    if (!tempName) {
-      setError("Por favor, insira um nome válido.");
-      return;
-    }
 
-    setLoading(true);  // Inicia o carregamento
-
+  const salvar = async (e) => {
+    e.preventDefault();
+    console.log(username)
     try {
-      // Atualiza o nome de exibição do usuário
-
-      // Atualizar no banco de dados
-
-      // Atualiza o nome no contexto global
-      setUsername(tempName);
-
-      setLoading(false);  // Finaliza o carregamento
-      alert("Nome alterado com sucesso!");
+      if (!tempName) {
+        setError("Por favor, insira um nome válido.");
+        return;
+      }
+      const data = await atualizarNome(userId, tempName);
+      alert(data.message || "Nome atualizado com sucesso!");
+      // Faça algo com os dados, como atualizar o estado global do usuário
     } catch (err) {
-      setLoading(false);  // Finaliza o carregamento
-      setError("Erro ao alterar o nome. Tente novamente.");
-      console.error(err);
+      alert(err.message); // Exibe o alerta de erro
     }
   };
 

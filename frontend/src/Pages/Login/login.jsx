@@ -8,7 +8,7 @@ import UserContext from "../../UserContext";
 import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
-  const { setUsername, setLogin, setUserEmail } = useContext(UserContext);
+  const { setUserData, logou } = useContext(UserContext);
   const [inputEmail, setEmail] = useState("");
   const [inputPassword, setPassword] = useState("");
   const { login, loading, error } = useLogin();
@@ -24,10 +24,7 @@ const Login = () => {
 
     try {
       const userData = await login(email, senha);
-      console.log(userData);
-      setUsername(userData.nome);
-      setUserEmail(userData.email);
-      setLogin(true);
+      logou(userData);
       alert("Login realizado com sucesso!");
       navigate("/minhaconta");
     } catch (err) {
@@ -71,9 +68,10 @@ const Login = () => {
             )}
           </div>
           <span className={styles.err}></span>
-          <button onClick={logar} className={styles.botao}>
-            Entrar
+          <button onClick={logar} className={styles.botao} disabled={loading}>
+            {loading ? "Carregando..." : "Login"}
           </button>
+          {error && <p>{error}</p>}
           <p className={styles.possuiConta}>
             Não possui uma conta?
             <Link to="/criarLogin" className={styles.cliqueAqui}>

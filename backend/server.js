@@ -67,6 +67,23 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.put("/usuario/:id/nome", (req, res) => {
+  const userId = req.params.id;
+  const { nome } = req.body;
+
+  const sql = "UPDATE usuarios SET nome = ? WHERE id = ?";
+  db.query(sql, [nome, userId], (err, results) => {
+      if (err) {
+          return res.status(500).json({ message: "Erro no servidor", error: err });
+      }
+
+      if (results.affectedRows === 0) {
+          return res.status(404).json({ message: "Usuário não encontrado" });
+      }
+
+      res.status(200).json({ message: "Nome atualizado com sucesso!" });
+  });
+});
 
 // Iniciar o servidor na porta 5000
 app.listen(5000, () => {
