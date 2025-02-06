@@ -8,7 +8,7 @@ import UserContext from "../../UserContext";
 import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
-  const { setUserData, logou } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const [inputEmail, setEmail] = useState("");
   const [inputPassword, setPassword] = useState("");
   const { login, loading, error } = useLogin();
@@ -24,7 +24,7 @@ const Login = () => {
 
     try {
       const userData = await login(email, senha);
-      logou(userData);
+      setUserData(userData);
       alert("Login realizado com sucesso!");
       navigate("/minhaconta");
     } catch (err) {

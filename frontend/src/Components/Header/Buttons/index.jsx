@@ -5,16 +5,16 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import UserContext from "../../../UserContext";
 
 export default function Buttons() {
-  const { username, login, avatar } = useContext(UserContext);
+  const { userData, login} = useContext(UserContext);
 
   return (
     <>
       {login ? (
         <div className={styles.loged}>
           <Link to="minhaconta" className={styles.logado}>
-            <p>{username}</p>
-            {avatar ? (
-              <img src={avatar} className={styles.userImg} />
+            <p>{userData.nome}</p>
+            {userData.avatar ? (
+              <img src={userData.avatar} className={styles.userImg} />
             ) : (
               <IoPersonCircleSharp className={styles.userIcon} />
             )}

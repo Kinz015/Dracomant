@@ -8,29 +8,21 @@ import { useNavigate } from "react-router-dom";
 import useAtualizarNome from "../../hooks/useAtualizarNome";
 
 const Conta = () => {
-  const {
-    userId,
-    username,
-    setUsername,
-    userEmail,
-    setUserEmail,
-    avatar,
-    setAvatar,
-    clear,
-    setLogin,
-  } = useContext(UserContext);
+  const { userData, setUserData, clear, setLogin } = useContext(UserContext);
   const [tempName, setTempName] = useState();
   const inputName = useRef();
   const inputRef = useRef();
   const [avatarName, setAvatarName] = useState(null);
   const [avatarTemp, setAvatarTemp] = useState(null);
-  const { atualizarNome, loading, error } = useAtualizarNome()
+  const [userId, setUserId] = useState(null);
+  const { atualizarNome, loading, error } = useAtualizarNome();
   const navigate = useNavigate();
 
   useEffect(() => {
     setLogin(true);
-    setTempName(username);
-  }, [setLogin, setUsername, setUserEmail, username]);
+    setTempName(userData.nome);
+    setUserId(userData.id);
+  }, [setLogin, userData]);
 
   function AlterarNome() {
     inputName.current.removeAttribute("disabled");
@@ -53,13 +45,16 @@ const Conta = () => {
 
   const salvar = async (e) => {
     e.preventDefault();
-    console.log(username)
     try {
       if (!tempName) {
         setError("Por favor, insira um nome válido.");
         return;
       }
       const data = await atualizarNome(userId, tempName);
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        nome: tempName,
+      }));
       alert(data.message || "Nome atualizado com sucesso!");
       // Faça algo com os dados, como atualizar o estado global do usuário
     } catch (err) {
@@ -132,7 +127,7 @@ const Conta = () => {
                     className={styles.btnEdit}
                   />
                 </div>
-                {tempName !== username && (
+                {tempName !== userData.nome && (
                   <button
                     onClick={cancel}
                     className={`${styles.button} ${styles.buttonIgn}`}
@@ -142,7 +137,7 @@ const Conta = () => {
                 )}
               </div>
               <label>E-mail:</label>
-              <p>{userEmail}</p>
+              <p>{userData.email}</p>
             </div>
             <div className={styles.buttons}>
               <button className={`${styles.button}`}>Alterar Senha</button>
