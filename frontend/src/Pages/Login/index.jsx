@@ -26,9 +26,9 @@ const Login = () => {
       const data = await login(email, senha);
       alert("Login realizado com sucesso!");
       // Faça algo com os dados, como redirecionar o usuário
-  } catch (err) {
+    } catch (err) {
       alert(err.message); // Exibe o alerta de erro
-  }
+    }
   };
 
   return (

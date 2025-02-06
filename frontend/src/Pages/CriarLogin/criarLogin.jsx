@@ -6,6 +6,7 @@ import useVisiblePass from "../../hooks/useVisiblePass";
 import useForm from "../../hooks/useForm";
 import { useContext } from "react";
 import UserContext from "../../UserContext";
+import useCadastroUsuario from "../../hooks/useCadastroUsuario";
 
 const CriarLogin = () => {
   const { setUsername, setLogin, setUserEmail } = useContext(UserContext);
@@ -13,6 +14,7 @@ const CriarLogin = () => {
   const inputEmail = useForm("email");
   const inputPassword = useForm("password");
   const inputPasswordConfirm = useForm();
+  const { cadastrarUsuario, loading, error } = useCadastroUsuario()
 
   const navigate = useNavigate();
 
@@ -21,12 +23,11 @@ const CriarLogin = () => {
     setVisiblePass,
     visiblePassConfirm,
     setVisiblePassConfirm,
-    error,
   } = useVisiblePass();
 
 
-  const criarConta = async () => {
-
+  const criarConta = async (e) => {
+    e.preventDefault();
     // FAZER VERIFIÇÃO E ADICIONAR NO BANCODE DADOS
     if (
       !inputName.error &&
@@ -42,17 +43,16 @@ const CriarLogin = () => {
       const nome = inputName.value;
       const email = inputEmail.value;
       const senha = inputPassword.value;
+      const confirmarSenha = inputPasswordConfirm.value
       
-      const response = await fetch("http://localhost:5000/cadastro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ nome, email, senha })
-      });
-  
-      const result = await response.json();
-      alert(result.message);
+      try {
+        const data = await cadastrarUsuario(nome, email, senha, confirmarSenha);
+        alert(data.message || "Cadastro de usuário realizado com sucesso!");
+        // Faça algo com os dados, como redirecionar o usuário
+    } catch (err) {
+        alert(err.message); // Exibe o alerta de erro
+    }
+      
 
       setUsername(nome);
       setUserEmail(email);
@@ -63,10 +63,6 @@ const CriarLogin = () => {
       inputPassword.onBlur()
       inputPasswordConfirm.onBlur()
     }
-
-    // console.log(error);
-    // setUsername(name.value);
-    // setUserEmail(email.value);
   };
 
   // Tenho que concertar essa gambiarra ↴
