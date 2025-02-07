@@ -117,7 +117,7 @@ const Conta = () => {
                 <div className={styles.blocoInput}>
                   <input
                     type="text"
-                    value={tempName}
+                    value={tempName || ""}
                     onChange={({ target }) => setTempName(target.value)}
                     disabled
                     ref={inputName}
@@ -137,7 +137,7 @@ const Conta = () => {
                 )}
               </div>
               <label>E-mail:</label>
-              <p>{userData.email}</p>
+              <p>{userData.email || ""}</p>
             </div>
             <div className={styles.buttons}>
               <button className={`${styles.button}`}>Alterar Senha</button>

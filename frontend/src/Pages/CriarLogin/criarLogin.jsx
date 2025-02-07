@@ -47,6 +47,7 @@ const CriarLogin = () => {
         const data = await cadastrarUsuario(nome, email, senha, confirmarSenha);
         alert(data.message || "Cadastro de usuário realizado com sucesso!");
         setUserData(data);
+        navigate("/login");
         // Faça algo com os dados, como redirecionar o usuário
       } catch (err) {
         alert(err.message); // Exibe o alerta de erro
