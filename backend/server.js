@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
+import bcrypt from "bcrypt";
 
 // Carregar variáveis de ambiente do arquivo .env
 config();  // Carrega as variáveis do arquivo .env
@@ -28,25 +29,34 @@ db.connect((err) => {
 });
 
 // Endpoint para cadastro de usuários
-app.post("/cadastro", (req, res) => {
+app.post("/cadastro", async (req, res) => {
   const { nome, email, senha } = req.body;
-  
-  const sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
-  
-  db.query(sql, [nome, email, senha], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: "Erro ao cadastrar usuário", error: err });
-    }
-    res.status(200).json({ message: "Usuário cadastrado com sucesso!" });
-  });
+
+  try {
+    // Criptografa a senha
+    const saltRounds = 10; // Número de rounds para gerar o salt
+    const senhaCriptografada = await bcrypt.hash(senha, saltRounds);
+
+    // Insere o usuário no banco de dados com a senha criptografada
+    const sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    db.query(sql, [nome, email, senhaCriptografada], (err, result) => {
+      if (err) {
+        return res.status(500).json({ message: "Erro ao cadastrar usuário", error: err });
+      }
+      res.status(200).json({ message: "Usuário cadastrado com sucesso!" });
+    });
+  } catch (error) {
+    console.error("Erro ao criptografar a senha:", error);
+    res.status(500).json({ message: "Erro no servidor", error: error });
+  }
 });
 
 // Endpoint para login de usuários
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, senha } = req.body;
 
   const sql = "SELECT * FROM usuarios WHERE email = ?";
-  db.query(sql, [email], (err, results) => {
+  db.query(sql, [email], async (err, results) => {
     if (err) {
       return res.status(500).json({ message: "Erro no servidor", error: err });
     }
@@ -57,13 +67,20 @@ app.post("/login", (req, res) => {
 
     const user = results[0];
 
-    // Comparar senhas (aqui, sem criptografia)
-    if (user.senha !== senha) {
-      return res.status(401).json({ message: "Senha incorreta" });
-    }
+    try {
+      // Compara a senha fornecida com a senha criptografada
+      const senhaCorreta = await bcrypt.compare(senha, user.senha);
 
-    // Se quiser, você pode usar JWT para gerar um token
-    res.status(200).json({ message: "Login realizado com sucesso!", user: { id: user.id, nome: user.nome, email: user.email } });
+      if (!senhaCorreta) {
+        return res.status(401).json({ message: "Senha incorreta" });
+      }
+
+      // Se quiser, você pode usar JWT para gerar um token
+      res.status(200).json({ message: "Login realizado com sucesso!", user: { id: user.id, nome: user.nome, email: user.email } });
+    } catch (error) {
+      console.error("Erro ao verificar a senha:", error);
+      res.status(500).json({ message: "Erro no servidor", error: error });
+    }
   });
 });
 
