@@ -19,10 +19,20 @@ const Conta = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLogin(true);
-    setTempName(userData.nome);
-    setUserId(userData.id);
-  }, [setLogin, userData]);
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (token && user) {
+      // Atualiza o estado da aplicação (por exemplo, usando Context API ou Redux)
+      setLogin(true);
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        nome: user.nome,
+        email: user.email,
+      }));
+      setTempName(user.nome);
+      setUserId(user.id);
+    }
+  }, []);
 
   function AlterarNome() {
     inputName.current.removeAttribute("disabled");

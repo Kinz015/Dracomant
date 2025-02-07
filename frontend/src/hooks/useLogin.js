@@ -25,6 +25,7 @@ const useLogin = () => {
       const data = await response.json();
       if (data.token) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
       }
 
       setLoading(false);

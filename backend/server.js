@@ -3,9 +3,10 @@ import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 // Carregar variáveis de ambiente do arquivo .env
-config();  // Carrega as variáveis do arquivo .env
+config(); // Carrega as variáveis do arquivo .env
 
 const app = express();
 app.use(cors());
@@ -41,7 +42,9 @@ app.post("/cadastro", async (req, res) => {
     const sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
     db.query(sql, [nome, email, senhaCriptografada], (err, result) => {
       if (err) {
-        return res.status(500).json({ message: "Erro ao cadastrar usuário", error: err });
+        return res
+          .status(500)
+          .json({ message: "Erro ao cadastrar usuário", error: err });
       }
       res.status(200).json({ message: "Usuário cadastrado com sucesso!" });
     });
@@ -75,8 +78,16 @@ app.post("/login", async (req, res) => {
         return res.status(401).json({ message: "Senha incorreta" });
       }
 
-      // Se quiser, você pode usar JWT para gerar um token
-      res.status(200).json({ message: "Login realizado com sucesso!", user: { id: user.id, nome: user.nome, email: user.email } });
+      // Gera um token JWT
+      const token = jwt.sign({ userId: user.id }, "segredo", {
+        expiresIn: "1h",
+      });
+
+      res.status(200).json({
+        message: "Login realizado com sucesso!",
+        user: { id: user.id, nome: user.nome, email: user.email },
+        token,
+      });
     } catch (error) {
       console.error("Erro ao verificar a senha:", error);
       res.status(500).json({ message: "Erro no servidor", error: error });
@@ -90,15 +101,15 @@ app.put("/usuario/:id/nome", (req, res) => {
 
   const sql = "UPDATE usuarios SET nome = ? WHERE id = ?";
   db.query(sql, [nome, userId], (err, results) => {
-      if (err) {
-          return res.status(500).json({ message: "Erro no servidor", error: err });
-      }
+    if (err) {
+      return res.status(500).json({ message: "Erro no servidor", error: err });
+    }
 
-      if (results.affectedRows === 0) {
-          return res.status(404).json({ message: "Usuário não encontrado" });
-      }
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
 
-      res.status(200).json({ message: "Nome atualizado com sucesso!" });
+    res.status(200).json({ message: "Nome atualizado com sucesso!" });
   });
 });
 

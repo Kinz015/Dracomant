@@ -11,6 +11,8 @@ export const UserStorage = ({ children }) => {
   const [avatar, setAvatar] = useState(null)
   
   const clear = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUsername(null);
     setUserEmail(null);
     setAvatar(null);
