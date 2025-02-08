@@ -14,7 +14,7 @@ const useCadastroUsuario = () => {
                 throw new Error("As senhas não coincidem");
             }
 
-            const response = await fetch("https://dracomant.vercel.app/cadastro", {
+            const response = await fetch("http://localhost:5000/cadastro", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
