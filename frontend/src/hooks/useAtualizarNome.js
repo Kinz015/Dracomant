@@ -9,7 +9,7 @@ const useAtualizarNome = () => {
         setError(null);
 
         try {
-            const response = await fetch(`http://localhost:5000/usuario/${userId}/nome`, {
+            const response = await fetch(`https://dracomant.vercel.app/usuario/${userId}/nome`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
