@@ -9,11 +9,7 @@ import jwt from "jsonwebtoken";
 config(); // Carrega as variáveis do arquivo .env
 
 const app = express();
-app.use(cors({
-  origin: 'https://dracomant.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-}));
+app.use(cors());
 app.use(express.json());
 
 // Configuração da conexão com o banco de dados
