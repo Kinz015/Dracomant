@@ -8,12 +8,20 @@ const useCadastroUsuario = () => {
     setLoading(true);
     setError(null);
 
+    const API_URL =
+      import.meta.env.MODE === "development"
+        ? import.meta.env.VITE_API_URL_DEV
+        : import.meta.env.VITE_API_URL_PROD;
+
+    console.log("Modo do Vite:", import.meta.env.MODE);
+    console.log("API_URL:", API_URL);
+
     try {
       if (senha !== confirmarSenha) {
         throw new Error("As senhas não coincidem");
       }
 
-      const response = await fetch("http://localhost:5000/cadastro", {
+      const response = await fetch(`${API_URL}/cadastro`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

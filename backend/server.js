@@ -9,7 +9,14 @@ dotenv.config({ path: "../.env" }); // Carrega as variáveis do arquivo .env
 
 const app = express();
 
-app.use(cors( ));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Permite requisições do frontend
+    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
+    credentials: true, // Permite cookies e headers de autenticação
+  })
+);
+
 app.use(express.json());
 
 // Configuração da conexão com o banco de dados
