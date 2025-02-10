@@ -13,7 +13,7 @@ const useCadastroUsuario = () => {
         throw new Error("As senhas não coincidem");
       }
 
-      const response = await fetch("http://localhost:5000/cadastro", {
+      const response = await fetch("/api/cadastro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

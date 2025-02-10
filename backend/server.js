@@ -8,7 +8,12 @@ import jwt from "jsonwebtoken";
 config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://dracomant.vercel.app", // URL do frontend
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const db = mysql.createConnection({
@@ -26,7 +31,7 @@ db.connect((err) => {
   console.log("Conectado ao MySQL!");
 });
 
-app.post("/cadastro", async (req, res) => {
+app.post("/api/cadastro", async (req, res) => {
   const { nome, email, senha } = req.body;
 
   try {
@@ -48,7 +53,7 @@ app.post("/cadastro", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { email, senha } = req.body;
 
   const sql = "SELECT * FROM usuarios WHERE email = ?";
@@ -80,6 +85,24 @@ app.post("/login", async (req, res) => {
       console.error("Erro ao verificar a senha:", error);
       res.status(500).json({ message: "Erro no servidor", error: error });
     }
+  });
+});
+
+app.put("/api/usuario/:id/nome", (req, res) => {
+  const userId = req.params.id;
+  const { nome } = req.body;
+
+  const sql = "UPDATE usuarios SET nome = ? WHERE id = ?";
+  db.query(sql, [nome, userId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Erro no servidor", error: err });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    res.status(200).json({ message: "Nome atualizado com sucesso!" });
   });
 });
 
