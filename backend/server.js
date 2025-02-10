@@ -5,11 +5,14 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// Carregar variáveis de ambiente do arquivo .env
-dotenv.config({ path:"../.env" }); // Carrega as variáveis do arquivo .env
+dotenv.config({ path: '../.env' }); // Carrega as variáveis do arquivo .env
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://dracomant.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+}));
 app.use(express.json());
 
 // Configuração da conexão com o banco de dados
