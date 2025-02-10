@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import { config } from "dotenv";
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // Carregar variáveis de ambiente do arquivo .env
-dotenv.config({ path: '../.env' }); // Carrega as variáveis do arquivo .env
+config(); // Carrega as variáveis do arquivo .env
 
 const app = express();
 app.use(cors({
