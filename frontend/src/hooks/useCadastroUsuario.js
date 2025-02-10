@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 const useCadastroUsuario = () => {
-  const API_URL = "https://dracomant.vercel.app";
-
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +14,7 @@ const useCadastroUsuario = () => {
         throw new Error("As senhas não coincidem");
       }
 
-      const response = await fetch(`${API_URL}/cadastro,`, {
+      const response = await fetch("http://localhost:5000/cadastro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

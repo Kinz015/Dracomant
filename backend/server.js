@@ -1,18 +1,15 @@
-import dotenv from "dotenv";
+import { config } from "dotenv";
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-dotenv.config({ path: '../.env' }); // Carrega as variáveis do arquivo .env
+// Carregar variáveis de ambiente do arquivo .env
+config(); // Carrega as variáveis do arquivo .env
 
 const app = express();
-app.use(cors({
-  origin: 'https://dracomant.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-}));
+app.use(cors());
 app.use(express.json());
 
 // Configuração da conexão com o banco de dados
