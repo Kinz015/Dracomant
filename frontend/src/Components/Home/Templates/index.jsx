@@ -1,4 +1,5 @@
 import styles from "./index.module.css";
+import React from "react";
 import products from "../../../database.json";
 import UserContext from "../../../UserContext";
 import { useContext } from "react";

@@ -1,4 +1,5 @@
 import { BsEyeSlash, BsEye } from "react-icons/bs";
+import React from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import styles from "../CriarLogin/index.module.css";
 import { Link, useNavigate } from "react-router-dom";

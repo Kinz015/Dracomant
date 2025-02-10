@@ -1,4 +1,5 @@
 import styles from "./index.module.css";
+import React from "react";
 import logoWpp from "../../assets/logo-whatsapp.png"
 import logoInsta from "../../assets/logo-insta.png"
 import emailLogo from "../../assets/Email-logo.png"

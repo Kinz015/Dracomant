@@ -1,5 +1,6 @@
 import Loading from "../Loading/index";
 import styles from "./index.module.css";
+import React from "react";
 
 export default function Desenvolvimento() {
   return (
