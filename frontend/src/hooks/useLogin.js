@@ -9,7 +9,7 @@ const useLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const useLogin = () => {
     } catch (err) {
       setError(err.message);
       setLoading(false);
-      throw err; // Lança o erro para que o componente que chamou o hook possa lidar com ele
+      throw err; // Lança o erro para que o componente que chamou o hook possa lidar
     }
   };
 
