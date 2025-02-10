@@ -9,6 +9,7 @@ const useCadastroUsuario = () => {
     setError(null);
 
     try {
+      // Verifica se as senhas coincidem
       if (senha !== confirmarSenha) {
         throw new Error("As senhas não coincidem");
       }
@@ -32,7 +33,7 @@ const useCadastroUsuario = () => {
     } catch (err) {
       setError(err.message);
       setLoading(false);
-      throw err;
+      throw err; // Lança o erro para que o componente que chamou o hook possa lidar com ele
     }
   };
 

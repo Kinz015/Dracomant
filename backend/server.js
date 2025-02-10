@@ -5,12 +5,14 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-config();
+// Carregar variáveis de ambiente do arquivo .env
+config(); // Carrega as variáveis do arquivo .env
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Configuração da conexão com o banco de dados
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -18,6 +20,7 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
+// Verificar a conexão com o banco de dados
 db.connect((err) => {
   if (err) {
     console.error("Erro ao conectar ao banco:", err);
@@ -26,15 +29,18 @@ db.connect((err) => {
   console.log("Conectado ao MySQL!");
 });
 
+// Endpoint para cadastro de usuários
 app.post("/cadastro", async (req, res) => {
   const { nome, email, senha } = req.body;
 
   try {
-    const saltRounds = 10;
-    const senhacriptografada = await bcrypt.hash(senha, saltRounds);
+    // Criptografa a senha
+    const saltRounds = 10; // Número de rounds para gerar o salt
+    const senhaCriptografada = await bcrypt.hash(senha, saltRounds);
 
+    // Insere o usuário no banco de dados com a senha criptografada
     const sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
-    db.query(sql, [nome, email, senhacriptografada], (err, result) => {
+    db.query(sql, [nome, email, senhaCriptografada], (err, result) => {
       if (err) {
         return res
           .status(500)
@@ -48,6 +54,7 @@ app.post("/cadastro", async (req, res) => {
   }
 });
 
+// Endpoint para login de usuários
 app.post("/login", async (req, res) => {
   const { email, senha } = req.body;
 
@@ -56,17 +63,22 @@ app.post("/login", async (req, res) => {
     if (err) {
       return res.status(500).json({ message: "Erro no servidor", error: err });
     }
+
     if (results.length === 0) {
       return res.status(401).json({ message: "Usuário não encontrado" });
     }
 
     const user = results[0];
+
     try {
-      const senhacorreta = await bcrypt.compare(senha, user.senha);
-      if (!senhacorreta) {
+      // Compara a senha fornecida com a senha criptografada
+      const senhaCorreta = await bcrypt.compare(senha, user.senha);
+
+      if (!senhaCorreta) {
         return res.status(401).json({ message: "Senha incorreta" });
       }
 
+      // Gera um token JWT
       const token = jwt.sign({ userId: user.id }, "segredo", {
         expiresIn: "1h",
       });
@@ -83,6 +95,25 @@ app.post("/login", async (req, res) => {
   });
 });
 
+app.put("/usuario/:id/nome", (req, res) => {
+  const userId = req.params.id;
+  const { nome } = req.body;
+
+  const sql = "UPDATE usuarios SET nome = ? WHERE id = ?";
+  db.query(sql, [nome, userId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Erro no servidor", error: err });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    res.status(200).json({ message: "Nome atualizado com sucesso!" });
+  });
+});
+
+// Iniciar o servidor na porta 5000
 app.listen(5000, () => {
   console.log("Servidor rodando na porta 5000");
 });
