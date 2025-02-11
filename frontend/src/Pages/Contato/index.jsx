@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./index.module.css";
 import logoWpp from "../../assets/logo-whatsapp.png"
 import logoInsta from "../../assets/logo-insta.png"

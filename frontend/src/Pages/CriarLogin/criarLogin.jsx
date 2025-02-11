@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./index.module.css";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsPerson, BsEyeSlash, BsEye } from "react-icons/bs";

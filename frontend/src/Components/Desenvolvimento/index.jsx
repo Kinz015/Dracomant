@@ -1,3 +1,4 @@
+import React from "react";
 import Loading from "../Loading/index";
 import styles from "./index.module.css";
 

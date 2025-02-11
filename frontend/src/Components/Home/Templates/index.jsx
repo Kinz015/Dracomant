@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./index.module.css";
 import products from "../../../database.json";
 import UserContext from "../../../UserContext";

@@ -1,5 +1,5 @@
+import React from "react";
 import styles from "./index.module.css";
-
 import LogoENome from "./LogoENome";
 import Navbar from "./Navbar";
 import Buttons from "./Buttons";

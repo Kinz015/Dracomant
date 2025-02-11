@@ -5,7 +5,7 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-dotenv.config({ path: "../.env" }); // Carrega as variáveis do arquivo .env
+dotenv.config(); // Carrega as variáveis do arquivo .env
 
 const app = express();
 
