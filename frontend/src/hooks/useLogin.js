@@ -13,6 +13,9 @@ const useLogin = () => {
         ? import.meta.env.VITE_API_URL_DEV
         : import.meta.env.VITE_API_URL_PROD;
 
+    console.log("Modo:", import.meta.env.MODE);
+    console.log("API_URL:", API_URL);
+
     try {
       const response = await fetch(`${API_URL}/login`, {
         method: "POST",
