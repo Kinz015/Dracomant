@@ -1,5 +1,4 @@
 import styles from "./index.module.css";
-import React from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsPerson, BsEyeSlash, BsEye } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";

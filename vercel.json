@@ -7,11 +7,7 @@
     },
     {
       "src": "/frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist", 
-        "cleanDistDir": true 
-      }
+      "use": "@vercel/static-build"
     }
   ],
   "routes": [
@@ -21,14 +17,10 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/dist/index.html" 
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/frontend/dist/assets/$1" 
+      "dest": "./index.html"
     }
   ],
   "env": {
-    "NODE_ENV": "production" 
+    "NODE_ENV": "development"
   }
 }

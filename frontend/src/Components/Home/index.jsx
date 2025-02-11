@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import React from "react";
 import styles from "./index.module.css";
 import Template from "./Templates";
 import { MdArrowForwardIos } from "react-icons/md";
