@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/', // Garante que os caminhos funcionem corretamente
   build: {
-    outDir: 'dist', // Garanta que o diretório de saída seja "dist" dentro do frontend
+    outDir: 'dist',
   },
 });
