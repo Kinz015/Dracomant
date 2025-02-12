@@ -37,7 +37,7 @@ db.connect((err) => {
 });
 
 // Endpoint para cadastro de usuários
-app.post("/api/cadastro", async (req, res) => {
+app.post("/cadastro", async (req, res) => {
   const { nome, email, senha } = req.body;
 
   try {
