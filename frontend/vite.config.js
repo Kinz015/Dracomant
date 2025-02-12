@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [react()],
   base: '/', // Garante que os caminhos funcionem corretamente
   build: {
-    outDir: 'dist',
-  },
+    outDir: 'dist' // Garante que o build seja gerado na pasta correta
+  }
 });
