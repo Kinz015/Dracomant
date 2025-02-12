@@ -9,7 +9,7 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "frontend/dist"
+        "distDir": "dist"
       }
     }
   ],
@@ -17,11 +17,6 @@
     {
       "src": "/api/(.*)",
       "dest": "backend/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/dist/$1",
-      "headers": { "Cache-Control": "public, max-age=31536000, immutable" }
     },
     {
       "handle": "filesystem"
