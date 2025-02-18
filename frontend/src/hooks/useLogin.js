@@ -10,7 +10,9 @@ const useLogin = () => {
 
     console.log("Variáveis de ambiente:", import.meta.env);
 
-    const baseUrl = import.meta.env.VITE_API_URL_PROD;
+    const baseUrl = import.meta.env.DEV
+      ? import.meta.env.VITE_API_URL_DEV
+      : import.meta.env.VITE_API_URL_PROD;
 
     console.log("Modo de desenvolvimento?", import.meta.env.DEV);
     console.log("URL base:", baseUrl);
