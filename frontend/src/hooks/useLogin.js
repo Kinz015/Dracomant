@@ -26,12 +26,28 @@ const useLogin = () => {
         body: JSON.stringify({ email, senha }),
       });
 
+      // Verifique o status da resposta
+      console.log("Status da resposta:", response.status);
+
+      // Verifique o texto da resposta (pode não ser JSON)
+      const responseText = await response.text();
+      console.log("Texto da resposta:", responseText);
+
       if (!response.ok) {
-        const errorData = await response.json();
+        // Tente processar o erro como JSON, mas trate caso não seja JSON válido
+        let errorData;
+        try {
+          errorData = JSON.parse(responseText);
+        } catch (e) {
+          errorData = { message: responseText || "Erro ao fazer login" };
+        }
         throw new Error(errorData.message || "Erro ao fazer login");
       }
 
-      const data = await response.json();
+      // Processar a resposta como JSON
+      const data = JSON.parse(responseText);
+      console.log("Dados recebidos:", data);
+
       if (data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
