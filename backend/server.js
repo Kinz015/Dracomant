@@ -7,13 +7,25 @@ import jwt from "jsonwebtoken";
 
 dotenv.config(); // Carrega as variáveis do arquivo .env
 
+const allowedOrigins = [
+  "http://localhost:5173", // Frontend local
+  "https://dracomant.vercel.app", // Frontend no Vercel
+];
+
 const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Permite requisições do frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
-    credentials: true, // Permite cookies e headers de autenticação
+    origin: function (origin, callback) {
+      // Verifica se a origem da requisição está na lista de origens permitidas
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Origem não permitida pelo CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 
