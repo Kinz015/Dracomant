@@ -26,10 +26,6 @@ const useLogin = () => {
         body: JSON.stringify({ email, senha }),
       });
 
-      console.log("Status da resposta:", response.status);
-      const responseText = await response.text();
-      console.log("Texto da resposta:", responseText);
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Erro ao fazer login");
@@ -53,3 +49,4 @@ const useLogin = () => {
   return { login, loading, error };
 };
 
+export default useLogin;
