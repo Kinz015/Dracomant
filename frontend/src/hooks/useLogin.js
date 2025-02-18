@@ -8,13 +8,14 @@ const useLogin = () => {
     setLoading(true);
     setError(null);
 
-    const API_URL =
-      import.meta.env.MODE === "development"
-        ? import.meta.env.VITE_API_URL_DEV
-        : import.meta.env.VITE_API_URL_PROD;
+    console.log("Variáveis de ambiente:", import.meta.env);
 
-    console.log("Modo:", import.meta.env.MODE);
-    console.log("API_URL:", API_URL);
+    const baseUrl = import.meta.env.DEV
+      ? import.meta.env.VITE_API_URL_DEV
+      : import.meta.env.VITE_API_URL_PROD;
+
+    console.log("Modo de desenvolvimento?", import.meta.env.DEV);
+    console.log("URL base:", baseUrl);
 
     try {
       const response = await fetch(`${API_URL}/login`, {
