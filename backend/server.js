@@ -90,7 +90,6 @@ app.post("/login", async (req, res) => {
     const user = results[0];
 
     try {
-      // Compara a senha fornecida com a senha criptografada
       const senhaCorreta = await bcrypt.compare(senha, user.senha);
 
       if (!senhaCorreta) {
