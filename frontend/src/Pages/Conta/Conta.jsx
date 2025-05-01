@@ -6,6 +6,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import UserContext from "../../UserContext";
 import { useNavigate } from "react-router-dom";
 import useAtualizarNome from "../../hooks/useAtualizarNome";
+import fundoDg from "../../assets/fundoDg.png"
 
 const Conta = () => {
   const { userData, setUserData, clear, setLogin } = useContext(UserContext);
