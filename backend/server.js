@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 dotenv.config(); // Carrega as variáveis do arquivo .env
+console.log("Variáveis de ambiente:", process.env.DB_HOST, process.env.DB_USER);
 
 const allowedOrigins = [
   "http://localhost:5173", // Frontend local

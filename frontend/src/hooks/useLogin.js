@@ -9,16 +9,16 @@ const useLogin = () => {
     setError(null);
 
     console.log("Variáveis de ambiente:", import.meta.env);
-
-    const baseUrl = import.meta.env.DEV
-      ? import.meta.env.VITE_API_URL_DEV
-      : import.meta.env.VITE_API_URL_PROD;
+    const API_URL = "http://localhost:5000"
+    // const baseUrl = import.meta.env.DEV
+    //   ? import.meta.env.VITE_API_URL_DEV
+    //   : import.meta.env.VITE_API_URL_PROD;
 
     console.log("Modo de desenvolvimento?", import.meta.env.DEV);
-    console.log("URL base:", baseUrl);
+    console.log("URL base:", API_URL);
 
     try {
-      const response = await fetch(`${baseUrl}/login`, {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

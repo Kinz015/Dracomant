@@ -8,10 +8,11 @@ const useCadastroUsuario = () => {
     setLoading(true);
     setError(null);
 
-    const API_URL =
-      import.meta.env.MODE === "development"
-        ? import.meta.env.VITE_API_URL_DEV
-        : import.meta.env.VITE_API_URL_PROD;
+    const API_URL = "http://localhost:5000"
+    // const API_URL =
+    //   import.meta.env.MODE === "development"
+    //     ? import.meta.env.VITE_API_URL_DEV
+    //     : import.meta.env.VITE_API_URL_PROD;
 
     console.log("Modo do Vite: ", import.meta.env.MODE);
     console.log("API_URL:", API_URL);
