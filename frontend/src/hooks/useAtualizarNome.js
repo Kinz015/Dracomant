@@ -8,10 +8,11 @@ const useAtualizarNome = () => {
     setLoading(true);
     setError(null);
 
-    const API_URL =
-    import.meta.env.MODE === "development"
-      ? import.meta.env.VITE_API_URL_DEV
-      : import.meta.env.VITE_API_URL_PROD;
+    const API_URL = "http://localhost:5000";
+    // const API_URL =
+    // import.meta.env.MODE === "development"
+    //   ? import.meta.env.VITE_API_URL_DEV
+    //   : import.meta.env.VITE_API_URL_PROD;
 
     try {
       const response = await fetch(
