@@ -28,9 +28,13 @@ const Conta = () => {
         ...prevUserData,
         nome: user.nome,
         email: user.email,
+        avatar: user.avatar,
       }));
       setTempName(user.nome);
       setUserId(user.id);
+      if (user.avatar) {
+        setAvatarTemp(user.avatar);
+      }
     }
   }, []);
 
@@ -53,22 +57,38 @@ const Conta = () => {
     setTempName(username);
   }
 
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
   const salvar = async (e) => {
     e.preventDefault();
     try {
       if (!tempName) {
-        setError("Por favor, insira um nome válido.");
+        alert("Por favor, insira um nome válido.");
         return;
       }
       const data = await atualizarNome(userId, tempName);
       setUserData((prevUserData) => ({
         ...prevUserData,
         nome: tempName,
+        avatar: avatarTemp,
       }));
+
+      const updatedUser = {
+        ...JSON.parse(localStorage.getItem("user")),
+        nome: tempName,
+        avatar: avatarTemp,
+      };
+
+      localStorage.setItem("user", JSON.stringify(updatedUser));
       alert(data.message || "Nome atualizado com sucesso!");
-      // Faça algo com os dados, como atualizar o estado global do usuário
     } catch (err) {
-      alert(err.message); // Exibe o alerta de erro
+      alert(err.message);
     }
   };
 
@@ -111,10 +131,18 @@ const Conta = () => {
               id="selecao-arquivo"
               hidden
               accept="imagem/jpg, image/jpeg, image/png"
-              onChange={({ target: { files } }) => {
-                files[0] && setAvatarName(files[0].name);
-                if (files) {
-                  setAvatarTemp(URL.createObjectURL(files[0]));
+              onChange={async ({ target: { files } }) => {
+                if (files && files[0]) {
+                  const base64 = await toBase64(files[0]);
+                  setAvatarName(files[0].name);
+                  setAvatarTemp(base64);
+
+                  const updatedUser = {
+                    ...JSON.parse(localStorage.getItem("user")),
+                    avatar: base64,
+                  };
+
+                  localStorage.setItem("user", JSON.stringify(updatedUser));
                 }
               }}
               className={styles.inputImg}
