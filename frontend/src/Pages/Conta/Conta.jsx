@@ -21,19 +21,20 @@ const Conta = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(localStorage.getItem("user"))
     if (token && user) {
       // Atualiza o estado da aplicação (por exemplo, usando Context API ou Redux)
       setLogin(true);
       setUserData((prevUserData) => ({
         ...prevUserData,
-        nome: user.nome,
+        nome: user.displayName,
         email: user.email,
-        avatar: user.avatar,
+        avatar: user.photoURL,
       }));
-      setTempName(user.nome);
+      setTempName(user.displayName);
       setUserId(user.id);
-      if (user.avatar) {
-        setAvatarTemp(user.avatar);
+      if (user.photoURL) {
+        setAvatarTemp(user.photoURL);
       }
     }
   }, []);
