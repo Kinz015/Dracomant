@@ -54,7 +54,7 @@ const Conta = () => {
   }
 
   function cancel() {
-    setTempName(username);
+    setTempName(userData.nome);
   }
 
   const toBase64 = (file) =>
