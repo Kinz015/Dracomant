@@ -1,43 +1,27 @@
 import { useState } from "react";
+import { auth } from "../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const useCadastroUsuario = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const cadastrarUsuario = async (nome, email, senha, confirmarSenha) => {
+  const cadastrarUsuario = async (nome, email, senha) => {
     setLoading(true);
     setError(null);
 
-    const API_URL = "http://localhost:5000"
-    // const API_URL =
-    //   import.meta.env.MODE === "development"
-    //     ? import.meta.env.VITE_API_URL_DEV
-    //     : import.meta.env.VITE_API_URL_PROD;
-
-    console.log("Modo do Vite: ", import.meta.env.MODE);
-    console.log("API_URL:", API_URL);
-
     try {
-      if (senha !== confirmarSenha) {
-        throw new Error("As senhas não coincidem");
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
+
+      // Atualiza o nome do usuário
+      if (nome) {
+        await updateProfile(user, { displayName: nome });
       }
 
-      const response = await fetch(`${API_URL}/cadastro`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nome, email, senha }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Erro ao cadastrar usuário");
-      }
-
-      const data = await response.json();
+      console.log("Usuário cadastrado:", user);
       setLoading(false);
-      return data;
+      return user;
     } catch (err) {
       setError(err.message);
       setLoading(false);

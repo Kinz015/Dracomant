@@ -21,7 +21,6 @@ const Conta = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(localStorage.getItem("user"))
     if (token && user) {
       // Atualiza o estado da aplicação (por exemplo, usando Context API ou Redux)
       setLogin(true);

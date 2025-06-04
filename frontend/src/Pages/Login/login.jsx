@@ -9,7 +9,6 @@ import useVisiblePass from "../../hooks/useVisiblePass";
 import UserContext from "../../UserContext";
 import useLogin from "../../hooks/useLogin";
 import useLoginGoogle from "../../hooks/useLoginGoogle";
-import logoGoogle from "../../assets/logo-google.png";
 
 const Login = () => {
   const { setUserData } = useContext(UserContext);
@@ -37,7 +36,7 @@ const Login = () => {
       alert("Login realizado com sucesso!");
       navigate("/minhaconta");
     } catch (err) {
-      alert(err.message); // Exibe o alerta de erro
+      alert(err.message);
     }
   };
 

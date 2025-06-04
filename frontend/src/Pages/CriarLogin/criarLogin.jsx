@@ -42,18 +42,17 @@ const CriarLogin = () => {
       const nome = inputName.value;
       const email = inputEmail.value;
       const senha = inputPassword.value;
-      const confirmarSenha = inputPasswordConfirm.value;
+
+      console.log("E-mail que será enviado:", email);
 
       try {
-        const data = await cadastrarUsuario(nome, email, senha, confirmarSenha);
+        const data = await cadastrarUsuario(nome, email, senha);
         alert(data.message || "Cadastro de usuário realizado com sucesso!");
-        setUserData(data);
         navigate("/login");
         // Faça algo com os dados, como redirecionar o usuário
       } catch (err) {
         alert(err.message); // Exibe o alerta de erro
       }
-
     } else {
       inputName.onBlur();
       inputEmail.onBlur();
@@ -62,16 +61,18 @@ const CriarLogin = () => {
     }
   };
 
-  // Tenho que concertar essa gambiarra ↴
+  const validarSenhas = () => {
+    if (
+      inputPassword.value &&
+      inputPasswordConfirm.value &&
+      inputPasswordConfirm.value !== inputPassword.value
+    ) {
+      return "As senhas não coincidem";
+    }
+    return null;
+  };
 
-  let err = null;
-
-  if (
-    inputPasswordConfirm.value.length !== 0 &&
-    inputPasswordConfirm.value !== inputPassword.value
-  ) {
-    err = "As senhas não coincidem";
-  }
+  let err = validarSenhas();
 
   return (
     <div className={styles.main}>
@@ -177,7 +178,11 @@ const CriarLogin = () => {
             {inputPasswordConfirm.error && <p>{inputPasswordConfirm.error}</p>}
             {err}
           </span>
-          <button onClick={criarConta} className={styles.botao} disabled={loading}>
+          <button
+            onClick={criarConta}
+            className={styles.botao}
+            disabled={loading}
+          >
             {loading ? "Cadastrando..." : "Cadastrar"}
           </button>
           {error && <p>{error}</p>}

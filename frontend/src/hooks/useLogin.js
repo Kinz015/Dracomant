@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { auth } from "../firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const useLogin = () => {
   const [error, setError] = useState(null);
@@ -8,41 +10,21 @@ const useLogin = () => {
     setLoading(true);
     setError(null);
 
-    console.log("Variáveis de ambiente:", import.meta.env);
-    const API_URL = "http://localhost:5000"
-    // const baseUrl = import.meta.env.DEV
-    //   ? import.meta.env.VITE_API_URL_DEV
-    //   : import.meta.env.VITE_API_URL_PROD;
-
-    console.log("Modo de desenvolvimento?", import.meta.env.DEV);
-    console.log("URL base:", API_URL);
-
     try {
-      const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, senha }),
-      });
+      const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Erro ao fazer login");
-      }
+      // Armazena no localStorage (opcional)
+      localStorage.setItem("token", user.accessToken);
+      localStorage.setItem("user", JSON.stringify(user));
 
-      const data = await response.json();
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-      }
-
+      console.log("Usuário logado:", user);
       setLoading(false);
-      return data.user;
+      return user;
     } catch (err) {
       setError(err.message);
       setLoading(false);
-      throw err; // Lança o erro para que o componente que chamou o hook possa lidar com ele
+      throw err;
     }
   };
 
@@ -50,3 +32,4 @@ const useLogin = () => {
 };
 
 export default useLogin;
+
