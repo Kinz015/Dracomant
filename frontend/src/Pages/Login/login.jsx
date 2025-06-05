@@ -9,15 +9,15 @@ import UserContext from "../../UserContext";
 import useLogin from "../../hooks/useLogin";
 import useForm from "../../hooks/useForm";
 import BtnGoogle from "../../Components/BtnGoogle";
+import EsqueciSenha from "../../Components/EsqueciSenha";
 
 const Login = () => {
   const { setUserData } = useContext(UserContext);
   const inputEmail = useForm("email");
   const inputPassword = useForm("");
   const { login, loading: loadingEmail, error: errorEmail } = useLogin();
-
+  const [visivel, setVisivel] = useState(false);
   const navigate = useNavigate();
-
   const { visiblePass, setVisiblePass } = useVisiblePass();
 
   const logar = async (e) => {
@@ -37,6 +37,10 @@ const Login = () => {
     } else {
       inputEmail.onBlur();
     }
+  };
+
+  const toggleModal = () => {
+    setVisivel((prev) => !prev);
   };
 
   return (
@@ -98,7 +102,13 @@ const Login = () => {
           </button>
           {errorEmail && <span>{errorEmail}</span>}
           <p className={styles.or}>ou</p>
-          <BtnGoogle text="Sign in with Google"/>
+          <BtnGoogle text="Sign in with Google" />
+          <p className={styles.possuiConta}>
+            Esqueceu a senha?
+            <span className={styles.cliqueAqui} onClick={toggleModal}>
+              Clique aqui
+            </span>
+          </p>
           <p className={styles.possuiConta}>
             Não possui uma conta?
             <Link to="/criarLogin" className={styles.cliqueAqui}>
@@ -111,6 +121,11 @@ const Login = () => {
             Amplie seu negócio de forma rapida e tecnológica
           </h1>
         </div>
+        {visivel && (
+          <div className={styles.overlay} onClick={toggleModal}>
+            <EsqueciSenha />
+          </div>
+        )}
       </div>
     </div>
   );
