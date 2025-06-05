@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { auth, db } from "../firebase/firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; // Firestore functions
+import { doc, getDoc, setDoc } from "firebase/firestore"; // Firestore functions
 
 const useLoginGoogle = () => {
   const [error, setError] = useState(null);
@@ -20,17 +20,27 @@ const useLoginGoogle = () => {
         localStorage.setItem("token", user.accessToken);
       }
 
-      const userData = {
-        uid: user.uid,
-        nome: user.displayName,
-        email: user.email,
-        fotoURL: user.photoURL,
-      };
+      const userRef = doc(db, "usuarios", user.uid);
+      const userSnap = await getDoc(userRef);
 
+      let userData;
+
+      if (userSnap.exists()) {
+        // ✅ Se já existe no Firestore, pega os dados de lá
+        userData = userSnap.data();
+      } else {
+        // 🆕 Se não existe, salva os dados do Google no Firestore
+        userData = {
+          uid: user.uid,
+          nome: user.displayName,
+          email: user.email,
+          fotoURL: user.photoURL,
+        };
+        await setDoc(userRef, userData);
+      }
+
+      // 🔐 Armazena no localStorage
       localStorage.setItem("user", JSON.stringify(userData));
-
-      // 🔥 Salvar dados no Firestore
-      await setDoc(doc(db, "usuarios", user.uid), userData);
 
       setLoading(false);
       return user;
