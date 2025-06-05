@@ -106,13 +106,13 @@ const Login = () => {
           <p className={styles.possuiConta}>
             Esqueceu a senha?
             <span className={styles.cliqueAqui} onClick={toggleModal}>
-              Clique aqui
+              Recuperar
             </span>
           </p>
           <p className={styles.possuiConta}>
-            Não possui uma conta?
+            Novo por aqui?
             <Link to="/criarLogin" className={styles.cliqueAqui}>
-              Clique aqui
+              Crie uma conta
             </Link>
           </p>
         </form>
