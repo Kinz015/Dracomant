@@ -8,6 +8,7 @@ import useForm from "../../hooks/useForm";
 import { useContext } from "react";
 import UserContext from "../../UserContext";
 import useCadastroUsuario from "../../hooks/useCadastroUsuario";
+import BtnGoogle from "../../Components/BtnGoogle";
 
 const CriarLogin = () => {
   const { setUserData } = useContext(UserContext);
@@ -186,6 +187,7 @@ const CriarLogin = () => {
             {loading ? "Cadastrando..." : "Cadastrar"}
           </button>
           {error && <p>{error}</p>}
+          <BtnGoogle text="Sign up with Google"/>
           <p className={styles.possuiConta}>
             Já possui uma conta?
             <Link to="/login" className={styles.cliqueAqui}>
