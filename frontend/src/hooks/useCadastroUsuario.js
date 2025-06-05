@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { auth } from "../firebase/firebaseConfig";
+import { auth, db } from "../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; // IMPORTAÇÃO FIRESTORE
-import { db } from "../firebase/firebaseConfig"; // INSTÂNCIA DO FIRESTORE
+import { doc, setDoc } from "firebase/firestore";
 
 const useCadastroUsuario = () => {
   const [error, setError] = useState(null);
@@ -20,17 +19,25 @@ const useCadastroUsuario = () => {
       );
       const user = userCredential.user;
 
-      // Atualiza o nome do usuário
+      // Atualiza o nome do usuário no Auth
       if (nome) {
         await updateProfile(user, { displayName: nome });
       }
 
-      await setDoc(doc(db, "usuarios", user.uid), {
+      const userData = {
+        uid: user.uid,
         nome: nome,
         email: email,
-      });
+        fotoURL: null,
+      };
 
-      console.log("Usuário cadastrado:", user);
+      // Salva no Firestore
+      await setDoc(doc(db, "usuarios", user.uid), userData);
+
+      // Salva localmente
+      localStorage.setItem("token", user.accessToken);
+      localStorage.setItem("user", JSON.stringify(userData));
+
       setLoading(false);
       return user;
     } catch (err) {
@@ -44,3 +51,4 @@ const useCadastroUsuario = () => {
 };
 
 export default useCadastroUsuario;
+

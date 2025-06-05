@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { auth } from "../firebase/firebaseConfig";
+import { auth, db } from "../firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 const useLogin = () => {
   const [error, setError] = useState(null);
@@ -14,13 +15,20 @@ const useLogin = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, senha);
       const user = userCredential.user;
 
-      // Armazena no localStorage (opcional)
-      localStorage.setItem("token", user.accessToken);
-      localStorage.setItem("user", JSON.stringify(user));
+      const docRef = doc(db, "usuarios", user.uid);
+      const docSnap = await getDoc(docRef);
 
-      console.log("Usuário logado:", user);
-      setLoading(false);
-      return user;
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+
+        localStorage.setItem("token", user.accessToken);
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        setLoading(false);
+        return userData;
+      } else {
+        throw new Error("Usuário não encontrado no Firestore.");
+      }
     } catch (err) {
       setError(err.message);
       setLoading(false);
