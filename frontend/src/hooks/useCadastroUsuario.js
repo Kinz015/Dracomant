@@ -34,10 +34,6 @@ const useCadastroUsuario = () => {
       // Salva no Firestore
       await setDoc(doc(db, "usuarios", user.uid), userData);
 
-      // Salva localmente
-      localStorage.setItem("token", user.accessToken);
-      localStorage.setItem("user", JSON.stringify(userData));
-
       setLoading(false);
       return user;
     } catch (err) {
