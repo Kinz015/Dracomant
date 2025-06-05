@@ -9,11 +9,12 @@ import useVisiblePass from "../../hooks/useVisiblePass";
 import UserContext from "../../UserContext";
 import useLogin from "../../hooks/useLogin";
 import useLoginGoogle from "../../hooks/useLoginGoogle";
+import useForm from "../../hooks/useForm";
 
 const Login = () => {
   const { setUserData } = useContext(UserContext);
-  const [inputEmail, setEmail] = useState("");
-  const [inputPassword, setPassword] = useState("");
+  const inputEmail = useForm("email");
+  const inputPassword = useForm("");
   const { login, loading: loadingEmail, error: errorEmail } = useLogin();
   const {
     loginGoogle,
@@ -30,19 +31,22 @@ const Login = () => {
     const email = inputEmail;
     const senha = inputPassword;
 
-    try {
-      const userData = await login(email, senha);
-      setUserData(userData);
-      alert("Login realizado com sucesso!");
-      navigate("/minhaconta");
-    } catch (err) {
-      alert(err.message);
+    if (!inputEmail.error) {
+      try {
+        const userData = await login(email, senha);
+        setUserData(userData);
+        alert("Login realizado com sucesso!");
+        navigate("/minhaconta");
+      } catch (err) {
+        alert(err.message);
+      }
+    } else {
+      inputEmail.onBlur();
     }
   };
 
   const logarGoogle = async (e) => {
     e.preventDefault(); // Previne o reload da página
-
     try {
       await loginGoogle();
       alert("Login realizado com sucesso!");
@@ -58,22 +62,32 @@ const Login = () => {
         <form onSubmit={(ev) => ev.preventDefault()} className={styles.form}>
           <h2 className={styles.titulo}>DRACOMANT</h2>
           <p className={styles.criarConta}>Login</p>
-          <div className={styles.blocos_input}>
+          <div
+            className={`${styles.blocos_input} ${
+              inputEmail.error && styles.errInput
+            }`}
+          >
             <input
               type="email"
               placeholder="E-mail"
-              value={inputEmail}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={inputEmail.onChange}
+              onBlur={inputEmail.onBlur}
+              value={inputEmail.value}
             />
             <AiOutlineMail className={styles.icons} />
           </div>
-          <span className={styles.err}></span>
-          <div className={styles.blocos_input}>
+          <span className={styles.err}>
+            {inputEmail.error && <p>{inputEmail.error}</p>}
+          </span>
+          <div className={`${styles.blocos_input} ${
+              inputPassword.error && styles.errInput
+            }`}>
             <input
               type={visiblePass ? "text" : "password"}
               placeholder="Senha"
-              value={inputPassword}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={inputPassword.onChange}
+              onBlur={inputPassword.onBlur}
+              value={inputPassword.value}
             />
             {visiblePass ? (
               <BsEye
@@ -87,7 +101,9 @@ const Login = () => {
               />
             )}
           </div>
-          <span className={styles.err}></span>
+          <span className={styles.err}>
+            {inputPassword.error && <p>{inputPassword.error}</p>}
+          </span>
           <button
             onClick={logar}
             className={styles.botao}
