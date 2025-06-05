@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { auth } from "../firebase/firebaseConfig";
+import { auth, db } from "../firebase/firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; // Firestore functions
 
 const useLoginGoogle = () => {
   const [error, setError] = useState(null);
@@ -12,21 +13,31 @@ const useLoginGoogle = () => {
     const provider = new GoogleAuthProvider();
 
     try {
-      const data = await signInWithPopup(auth, provider);
-      console.log("Usuário logado:", data.user)
-      console.log("Usuário name:", data.user.displayName)
-      console.log("Usuário token:", data.user.accessToken)
-      if (data.user.accessToken) {
-        localStorage.setItem("token", data.user.accessToken);
-        localStorage.setItem("user", JSON.stringify(data.user));
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      if (user.accessToken) {
+        localStorage.setItem("token", user.accessToken);
       }
 
+      const userData = {
+        uid: user.uid,
+        nome: user.displayName,
+        email: user.email,
+        fotoURL: user.photoURL,
+      };
+
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // 🔥 Salvar dados no Firestore
+      await setDoc(doc(db, "usuarios", user.uid), userData);
+
       setLoading(false);
-      return data.user;
+      return user;
     } catch (err) {
       setError(err.message);
       setLoading(false);
-      throw err; // Lança o erro para que o componente que chamou o hook possa lidar com ele
+      throw err;
     }
   };
 

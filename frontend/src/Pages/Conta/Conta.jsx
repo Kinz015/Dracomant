@@ -26,14 +26,14 @@ const Conta = () => {
       setLogin(true);
       setUserData((prevUserData) => ({
         ...prevUserData,
-        nome: user.displayName,
+        nome: user.nome,
         email: user.email,
-        avatar: user.photoURL,
+        avatar: user.fotoURL,
       }));
-      setTempName(user.displayName);
-      setUserId(user.id);
-      if (user.photoURL) {
-        setAvatarTemp(user.photoURL);
+      setTempName(user.nome);
+      setUserId(user.uid);
+      if (user.fotoURL) {
+        setAvatarTemp(user.fotoURL);
       }
     }
   }, []);
