@@ -97,6 +97,7 @@ const Login = () => {
             {loadingEmail ? "Carregando..." : "Login"}
           </button>
           {errorEmail && <span>{errorEmail}</span>}
+          <p className={styles.or}>ou</p>
           <BtnGoogle text="Sign in with Google"/>
           <p className={styles.possuiConta}>
             Não possui uma conta?

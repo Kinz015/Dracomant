@@ -97,6 +97,32 @@
   margin: 0.25rem;
 }
 
+.or {
+  display: flex;
+  color: black;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  gap: 10px;
+  margin: 10px 0px;
+}
+
+.or::before {
+  content: " ";
+  width: 100%;
+  height: 2px;
+  background-color: #757575;
+  align-self: center;
+}
+
+.or::after {
+  content: " ";
+  width: 100%;
+  height: 2px;
+  background-color: #757575;
+  align-self: center;
+}
+
 .possuiConta {
   color: var(--bg-color);
   padding-top: 10px;

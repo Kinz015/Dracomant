@@ -187,6 +187,7 @@ const CriarLogin = () => {
             {loading ? "Cadastrando..." : "Cadastrar"}
           </button>
           {error && <p>{error}</p>}
+          <p className={styles.or}>ou</p>
           <BtnGoogle text="Sign up with Google"/>
           <p className={styles.possuiConta}>
             Já possui uma conta?
