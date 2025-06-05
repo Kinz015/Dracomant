@@ -5,7 +5,7 @@ import { IoExitOutline } from "react-icons/io5";
 import { MdModeEditOutline } from "react-icons/md";
 import UserContext from "../../UserContext";
 import { useNavigate } from "react-router-dom";
-import useAtualizarNome from "../../hooks/useAtualizarNome";
+import useAtualizarPerfil  from "../../hooks/useAtualizarPerfil ";
 
 const Conta = () => {
   const { userData, setUserData, clear, setLogin } = useContext(UserContext);
@@ -15,7 +15,7 @@ const Conta = () => {
   const [avatarName, setAvatarName] = useState(null);
   const [avatarTemp, setAvatarTemp] = useState(null);
   const [userId, setUserId] = useState(null);
-  const { atualizarNome, loading, error } = useAtualizarNome();
+  const { atualizarPerfil, loading, error } = useAtualizarPerfil();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const Conta = () => {
         alert("Por favor, insira um nome válido.");
         return;
       }
-      const data = await atualizarNome(userId, tempName);
+      const data = await atualizarPerfil({ nome:tempName, fotoURL:avatarTemp });
       setUserData((prevUserData) => ({
         ...prevUserData,
         nome: tempName,
@@ -86,7 +86,7 @@ const Conta = () => {
       };
 
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      alert(data.message || "Nome atualizado com sucesso!");
+      alert(data.message || "Perfil atualizado com sucesso!");
     } catch (err) {
       alert(err.message);
     }
