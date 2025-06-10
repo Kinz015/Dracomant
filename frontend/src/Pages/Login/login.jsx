@@ -22,8 +22,8 @@ const Login = () => {
 
   const logar = async (e) => {
     e.preventDefault(); // Previne o reload da página
-    const email = inputEmail;
-    const senha = inputPassword;
+    const email = inputEmail.value;
+    const senha = inputPassword.value;
 
     if (!inputEmail.error) {
       try {
