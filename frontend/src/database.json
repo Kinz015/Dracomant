@@ -2,9 +2,9 @@
   {
     "id": 1,
     "title": "Taskinz",
-    "link": "https://taskinz.vercel.app/",
-    "img": "https://github-production-user-asset-6210df.s3.amazonaws.com/111818871/547298029-727981cd-3292-49b7-9804-8078905e87e9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260209%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260209T194312Z&X-Amz-Expires=300&X-Amz-Signature=87da8534276c527b406e09f62789dfbca5cffc4768b2da364bd3c6236f27ae43&X-Amz-SignedHeaders=host",
-    "description": "Taskinz é um gerenciador de tarefas e projetos feito para organizar o trabalho em um só lugar. Nele você cria tarefas, define prazos, acompanha o status (iniciadas, atrasadas e concluídas), e mantém tudo visível de forma clara e prática. A ideia é facilitar o controle do que está em andamento, o que precisa de atenção e o que já foi finalizado, com uma interface simples, rápida e focada em produtividade."
+    "link": "https://linkinz.vercel.app",
+    "img": "https://github.com/user-attachments/assets/111cce0a-e16b-4988-9bc7-6180270904da",
+    "description": "Taskinz é um gerenciador de tarefas e projetos feito para organizar o trabalho em um só lugar. Nele você cria tarefas, define prazos, acompanha o status (iniciadas, atrasadas e concluídas), e mantém tudo visível de forma clara e prática. A ideia é facilitar o controle do que está em andamento, o que precisa de atenção e o que já foi finalizado — com uma interface simples, rápida e focada em produtividade."
   },
   {
     "id": 2,
