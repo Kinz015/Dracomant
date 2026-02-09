@@ -1,55 +1,62 @@
 [
   {
     "id": 1,
+    "title": "Taskinz",
+    "link": "https://taskinz.vercel.app/",
+    "img": "https://github-production-user-asset-6210df.s3.amazonaws.com/111818871/547298029-727981cd-3292-49b7-9804-8078905e87e9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260209%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260209T194312Z&X-Amz-Expires=300&X-Amz-Signature=87da8534276c527b406e09f62789dfbca5cffc4768b2da364bd3c6236f27ae43&X-Amz-SignedHeaders=host",
+    "description": "Taskinz é um gerenciador de tarefas e projetos feito para organizar o trabalho em um só lugar. Nele você cria tarefas, define prazos, acompanha o status (iniciadas, atrasadas e concluídas), e mantém tudo visível de forma clara e prática. A ideia é facilitar o controle do que está em andamento, o que precisa de atenção e o que já foi finalizado, com uma interface simples, rápida e focada em produtividade."
+  },
+  {
+    "id": 2,
     "title": "Linkinz",
     "link": "https://linkinz.vercel.app",
     "img": "https://github.com/user-attachments/assets/e60c0f86-0013-4627-a716-7651fe6142c0",
     "description": "Linkinz é uma plataforma simples e elegante para reunir e compartilhar todos os seus links importantes em um só lugar. Ideal para perfis de redes sociais, criadores de conteúdo, profissionais e marcas, o Linkinz permite que você crie uma página personalizada com seus links favoritos — tudo acessível com um único clique."
   },
   {
-    "id": 2,
+    "id": 3,
     "title": "Chronos Pomodoro",
     "link": "https://chronos-pomodoro-lime-theta.vercel.app/",
     "img": "https://github.com/user-attachments/assets/2ad078e7-2220-4394-9142-59a866d01cca",
     "description": "Aplicação web de produtividade que implementa a técnica Pomodoro, com temporizador de foco, pausas curtas e longas, contagem de ciclos e ajustes de duração em uma interface minimalista para estudo e trabalho."
   },
   {
-    "id": 3,
+    "id": 4,
     "title": "Guilherme Lins",
     "link": "https://guilherme-lins-react.vercel.app",
     "img": "https://github.com/user-attachments/assets/b3c9daf4-243f-4ebe-894f-6240dc137392",
     "description": "Este é um site pessoal criado por um desenvolvedor web front-end talentoso em busca de oportunidades e colaborações profissionais. Este site é uma vitrine de suas habilidades e projetos, destacando seu talento no desenvolvimento de interfaces de usuário atraentes e funcionais."
   },
   {
-    "id": 4,
+    "id": 5,
     "title": "Animais Fantásticos",
     "link": "https://kinz015.github.io/Animais-fantasticos/",
     "img": "https://github.com/user-attachments/assets/9a27d4d2-15ca-43eb-a8a0-d37db3df5169",
     "description": "Este é um site dedicado a fornecer informações abrangentes sobre uma variedade de animais. O site oferece  conteúdo informativo sobre comportamento animal, curiosidades etc."
   },
   {
-    "id": 5,
+    "id": 6,
     "title": "Dragon Ball",
     "link": "https://kinz015.github.io/DragonBall/index.html",
     "img": "https://github.com/user-attachments/assets/f739fe70-6199-4137-b946-40d6c4674e1d",
     "description": "Este é um site que oferece uma narrativa detalhada e abrangente da famosa franquia de mídia japonesa \"Dragon Ball\", criada por Akira Toriyama. O site explora a história de Dragon Ball desde o início, abrangendo todas as suas séries, incluindo \"Dragon Ball\", \"Dragon Ball Z\" e \"Dragon Ball Super\", bem como seus filmes, mangás e produtos relacionados."
   },
   {
-    "id": 6,
+    "id": 7,
     "title": "Dogs",
     "link": "https://dogs-xi-eight.vercel.app",
     "img": "https://github.com/user-attachments/assets/3003b461-ee48-4d93-bfbb-553653b69878",
     "description": "Dogs é a rede social definitiva dedicada exclusivamente aos nossos queridos amigos peludos. Desenvolvida para unir amantes de animais de estimação de todas as partes do mundo, essa plataforma inovadora proporciona uma experiência única para aqueles que consideram seus animais como parte integrante de suas vidas."
   },
   {
-    "id": 7,
+    "id": 8,
     "title": "Crystal RP",
     "link": "https://kinz015.github.io/Crystal-RP/lavardinheiro",
     "img": "https://github.com/user-attachments/assets/8bb0746a-ed2b-4fcd-89e3-2a1f3f4cb92a",
     "description": "Este é um site de ultilidade para a cidade do GTA RP (Jogo online) \"Crystal RP\", apenas com o propósito de servir para o jogo com o intuíto de entreter e se divertir."
   },
   {
-    "id": 8,
+    "id": 9,
     "title": "Dracomant",
     "link": "https://dracomant.vercel.app",
     "img": "https://github.com/user-attachments/assets/d0ae49c7-c0c8-4075-8656-f55e4f52de68",
