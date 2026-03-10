@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Taskinz",
-    "link": "https://linkinz.vercel.app",
+    "link": "taskinz-git-master-kinz015-projects.vercel.app",
     "img": "https://github.com/user-attachments/assets/111cce0a-e16b-4988-9bc7-6180270904da",
     "description": "Taskinz é um gerenciador de tarefas e projetos feito para organizar o trabalho em um só lugar. Nele você cria tarefas, define prazos, acompanha o status (iniciadas, atrasadas e concluídas), e mantém tudo visível de forma clara e prática. A ideia é facilitar o controle do que está em andamento, o que precisa de atenção e o que já foi finalizado — com uma interface simples, rápida e focada em produtividade."
   },
